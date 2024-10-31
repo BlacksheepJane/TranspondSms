@@ -13,6 +13,7 @@ import com.tim.tsms.transpondsms.model.vo.EmailSettingVo;
 import com.tim.tsms.transpondsms.model.vo.QYWXGroupRobotSettingVo;
 import com.tim.tsms.transpondsms.model.vo.SmsVo;
 import com.tim.tsms.transpondsms.model.vo.WebNotifySettingVo;
+import com.tim.tsms.transpondsms.model.vo.PushPlusSettingVo;
 import com.tim.tsms.transpondsms.utils.LogUtil;
 import com.tim.tsms.transpondsms.utils.RuleUtil;
 import com.tim.tsms.transpondsms.utils.SettingUtil;
@@ -23,6 +24,7 @@ import static com.tim.tsms.transpondsms.model.SenderModel.TYPE_DINGDING;
 import static com.tim.tsms.transpondsms.model.SenderModel.TYPE_EMAIL;
 import static com.tim.tsms.transpondsms.model.SenderModel.TYPE_QYWX_GROUP_ROBOT;
 import static com.tim.tsms.transpondsms.model.SenderModel.TYPE_WEB_NOTIFY;
+import static com.tim.tsms.transpondsms.model.SenderModel.TYPE_PUSHPLUS;
 
 public class SendUtil {
     private static String TAG = "SendUtil";
@@ -34,7 +36,12 @@ public class SendUtil {
             }catch (Exception e){
                 Log.d(TAG,"发送出错："+e.getMessage());
             }
-
+        if(SettingUtil.using_pushplus()){
+            try {
+                SenderPushplusMsg.sendMsg(msg);
+            }catch (Exception e){
+                Log.d(TAG,"发送出错："+e.getMessage());
+            }
         }
         if(SettingUtil.using_email()){
 //            SenderMailMsg.send(SettingUtil.get_send_util_email(Define.SP_MSG_SEND_UTIL_EMAIL_TOADD_KEY),"转发",msg);
@@ -159,6 +166,24 @@ public class SendUtil {
                             SenderQyWxGroupRobotMsg.sendMsg(handError,qywxGroupRobotSettingVo.getWebHook(),smsVo.getMobile(),smsVo.getSmsVoForSend());
                         }catch (Exception e){
                             Log.e(TAG, "senderSendMsg: SenderQyWxGroupRobotMsg error "+e.getMessage() );
+                        }
+
+                    }
+                }
+
+                break;
+
+            case TYPE_PUSHPLUS:
+                //try phrase json setting
+                if (senderModel.getJsonSetting() != null) {
+                    PushPlusSettingVo pushPlusSettingVo = JSON.parseObject(senderModel.getJsonSetting(), PushPlusSettingVo.class);
+                    if(pushPlusSettingVo!=null){
+                        try {
+                            // 此处的getMobile的作用再看
+                            // SenderPushplusMsg.sendMsg(handError, pushPlusSettingVo.getToken(), smsVo.getMobile(), smsVo.getSmsVoForSend());
+                            SenderPushplusMsg.sendMsg(handError, pushPlusSettingVo.getToken(), smsVo.getMobile(), smsVo.getSmsVoForSend());
+                        }catch (Exception e){
+                            Log.e(TAG, "senderSendMsg: dingding error "+e.getMessage() );
                         }
 
                     }
