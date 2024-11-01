@@ -13,9 +13,12 @@ public class SenderModel {
 
     public static final int TYPE_DINGDING = 0;
     public static final int TYPE_EMAIL = 1;
-    public static final int TYPE_MESSAGE = 2;
+    public static final int TYPE_PUSHPLUS = 2;
     public static final int TYPE_WEB_NOTIFY = 3;
     public static final int TYPE_QYWX_GROUP_ROBOT = 4;
+    //start
+    public static final int TYPE_SOCKET = 5;
+    //end
     private int type;
 
     private String jsonSetting;
@@ -80,6 +83,8 @@ public class SenderModel {
                 return R.drawable.ic_baseline_email_24;
             case (TYPE_QYWX_GROUP_ROBOT):
                 return R.mipmap.qywx;
+            case (TYPE_PUSHPLUS):
+                return R.mipmap.pushplus;
             default:
                 return R.mipmap.ic_launcher_round;
 

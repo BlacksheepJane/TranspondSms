@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout xmlns:tools="http://schemas.android.com/tools"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -51,17 +51,19 @@
                     android:background="@android:color/white"
                     android:orientation="horizontal"
                     android:padding="20dp">
+
                     <TextView
-                        android:layout_weight="3"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="设备名称" />
+                        android:layout_weight="3"
+                        android:text="设备备注 :" />
 
                     <EditText
                         android:id="@+id/et_add_extra_device_mark"
-                        android:layout_width="match_parent"
+                        android:layout_width="250dp"
                         android:layout_height="wrap_content"
-                        android:text="公司红色白皮手机">
+                        android:hint="设备备注"
+                        android:text="设备备注">
 
                     </EditText>
 
@@ -77,15 +79,16 @@
                     android:padding="20dp">
                     <TextView
                         android:layout_weight="3"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="卡一备注" />
+                        android:text="卡一备注 :" />
 
                     <EditText
                         android:id="@+id/et_add_extra_sim1"
-                        android:layout_width="match_parent"
+                        android:layout_width="250dp"
                         android:layout_height="wrap_content"
-                        android:text="人事小姐姐卡">
+                        android:hint="手机卡1备注"
+                        android:text="手机卡1备注">
 
                     </EditText>
 
@@ -101,15 +104,16 @@
                     android:padding="20dp">
                     <TextView
                         android:layout_weight="3"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="卡二备注" />
+                        android:text="卡二备注 :" />
 
                     <EditText
                         android:id="@+id/et_add_extra_sim2"
-                        android:layout_width="match_parent"
+                        android:layout_width="250dp"
                         android:layout_height="wrap_content"
-                        android:text="客服手机卡18888888888">
+                        android:hint="手机卡2备注"
+                        android:text="手机卡2备注">
 
                     </EditText>
 

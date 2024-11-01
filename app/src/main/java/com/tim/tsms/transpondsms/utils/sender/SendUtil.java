@@ -9,11 +9,11 @@ import com.tim.tsms.transpondsms.model.LogModel;
 import com.tim.tsms.transpondsms.model.RuleModel;
 import com.tim.tsms.transpondsms.model.SenderModel;
 import com.tim.tsms.transpondsms.model.vo.DingDingSettingVo;
+import com.tim.tsms.transpondsms.model.vo.PushPlusSettingVo;
 import com.tim.tsms.transpondsms.model.vo.EmailSettingVo;
 import com.tim.tsms.transpondsms.model.vo.QYWXGroupRobotSettingVo;
 import com.tim.tsms.transpondsms.model.vo.SmsVo;
 import com.tim.tsms.transpondsms.model.vo.WebNotifySettingVo;
-import com.tim.tsms.transpondsms.model.vo.PushPlusSettingVo;
 import com.tim.tsms.transpondsms.utils.LogUtil;
 import com.tim.tsms.transpondsms.utils.RuleUtil;
 import com.tim.tsms.transpondsms.utils.SettingUtil;
@@ -36,6 +36,8 @@ public class SendUtil {
             }catch (Exception e){
                 Log.d(TAG,"发送出错："+e.getMessage());
             }
+
+        }
         if(SettingUtil.using_pushplus()){
             try {
                 SenderPushplusMsg.sendMsg(msg);
@@ -185,7 +187,6 @@ public class SendUtil {
                         }catch (Exception e){
                             Log.e(TAG, "senderSendMsg: pushplus error "+e.getMessage() );
                         }
-
                     }
                 }
 

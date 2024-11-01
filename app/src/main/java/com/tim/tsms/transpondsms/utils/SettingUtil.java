@@ -41,7 +41,7 @@ public class SettingUtil {
     }
 
     public static String getAddExtraDeviceMark(){
-        return sp_setting.getString(Define.SP_MSG_KEY_STRING_ADD_EXTRA_DEVICE_MARK,"公司红色白皮手机");
+        return sp_setting.getString(Define.SP_MSG_KEY_STRING_ADD_EXTRA_DEVICE_MARK,"手机备注");
     }
 
     public static void setAddExtraSim1(String sim1){
@@ -52,7 +52,7 @@ public class SettingUtil {
     }
 
     public static String getAddExtraSim1(){
-        return sp_setting.getString(Define.SP_MSG_KEY_STRING_ADD_EXTRA_SIM1,"人事小姐姐卡");
+        return sp_setting.getString(Define.SP_MSG_KEY_STRING_ADD_EXTRA_SIM1,"sim1备注");
     }
 
     public static void setAddExtraSim2(String sim2){
@@ -63,24 +63,24 @@ public class SettingUtil {
     }
 
     public static String getAddExtraSim2(){
-        return sp_setting.getString(Define.SP_MSG_KEY_STRING_ADD_EXTRA_SIM2,"客服手机卡18888888888");
+        return sp_setting.getString(Define.SP_MSG_KEY_STRING_ADD_EXTRA_SIM2,"sim2备注");
     }
 
 
     public static boolean option_withreboot(){
         return sp_setting.getBoolean("option_withreboot",false);
     }
-    // dingding
+
     public static boolean using_dingding(){
         return sp_setting.getBoolean("option_dingding_on",false);
     }
     public static String get_using_dingding_token(){
         return sp_setting.getString("option_dingding_token","");
     }
-    public static String get_using_dingding_secret(){
-        return sp_setting.getString("option_dingding_secret","");
+    public static String get_using_dingding_secret() {
+        return sp_setting.getString("option_dingding_secret", "");
     }
-    //pushplus
+    //增加PUSHPLUS功能
     public static boolean using_pushplus(){
         return sp_setting.getBoolean("option_pushplus_on",false);
     }
