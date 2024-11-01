@@ -39,7 +39,9 @@ import java.util.List;
 import static com.tim.tsms.transpondsms.model.SenderModel.STATUS_ON;
 import static com.tim.tsms.transpondsms.model.SenderModel.TYPE_DINGDING;
 import static com.tim.tsms.transpondsms.model.SenderModel.TYPE_EMAIL;
+import static com.tim.tsms.transpondsms.model.SenderModel.TYPE_PUSHPLUS;
 import static com.tim.tsms.transpondsms.model.SenderModel.TYPE_QYWX_GROUP_ROBOT;
+import static com.tim.tsms.transpondsms.model.SenderModel.TYPE_SOCKET;
 import static com.tim.tsms.transpondsms.model.SenderModel.TYPE_WEB_NOTIFY;
 
 public class SenderActivity extends AppCompatActivity {
@@ -95,6 +97,12 @@ public class SenderActivity extends AppCompatActivity {
                         break;
                     case TYPE_QYWX_GROUP_ROBOT:
                         setQYWXGroupRobot(senderModel);
+                        break;
+                    case TYPE_SOCKET:
+                        setEmail(senderModel);
+                        break;
+                    case TYPE_PUSHPLUS:
+                        setPushPlus(senderModel);
                         break;
                     default:
                         Toast.makeText(SenderActivity.this,"异常的发送方类型！删除",Toast.LENGTH_LONG).show();
@@ -163,6 +171,12 @@ public class SenderActivity extends AppCompatActivity {
                         break;
                     case TYPE_QYWX_GROUP_ROBOT:
                         setQYWXGroupRobot(null);
+                        break;
+                    case TYPE_SOCKET:
+                        setEmail(null);
+                        break;
+                    case TYPE_PUSHPLUS:
+                        setPushPlus(null);
                         break;
                     default:
                         Toast.makeText(SenderActivity.this, "暂不支持这种转发！", Toast.LENGTH_LONG).show();
@@ -276,6 +290,114 @@ public class SenderActivity extends AppCompatActivity {
                 if (token != null && !token.isEmpty()) {
                     try {
                         SenderDingdingMsg.sendMsg(handler, token, secret,atMobiles,atAll, "test@" + (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())));
+                    } catch (Exception e) {
+                        Toast.makeText(SenderActivity.this, "发送失败：" + e.getMessage(), Toast.LENGTH_LONG).show();
+                        e.printStackTrace();
+                    }
+                } else {
+                    Toast.makeText(SenderActivity.this, "token 不能为空", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
+
+    private void setPushPlus(final SenderModel senderModel) {
+        PushPlusSettingVo pushplusSettingVo = null;
+        //try phrase json setting
+        if (senderModel != null) {
+            String jsonSettingStr = senderModel.getJsonSetting();
+            if (jsonSettingStr != null) {
+                pushplusSettingVo = JSON.parseObject(jsonSettingStr, PushPlusSettingVo.class);
+            }
+        }
+        //wangle muqian
+        final AlertDialog.Builder alertDialog71 = new AlertDialog.Builder(SenderActivity.this);
+        View view1 = View.inflate(SenderActivity.this, R.layout.activity_alter_dialog_setview_pushplus, null);
+
+        final EditText editTextpushplusName = view1.findViewById(R.id.editTextDingdingName);
+        if (senderModel != null)
+            editTextpushplusName.setText(senderModel.getName());
+        final EditText editTextpushplusToken = view1.findViewById(R.id.editTextDingdingToken);
+        if (pushplusSettingVo != null)
+            editTextpushplusToken.setText(pushplusSettingVo.getToken());
+        //由于pushplus不需要下面的输入UI，后面进行删除
+
+
+        Button buttonpushplusok = view1.findViewById(R.id.buttondingdingok);
+        Button buttonpushplusdel = view1.findViewById(R.id.buttondingdingdel);
+        Button buttonpushplustest = view1.findViewById(R.id.buttondingdingtest);
+        alertDialog71
+                .setTitle(R.string.setpushplustitle)
+                .setIcon(R.mipmap.pushplus)
+                .setView(view1)
+                .create();
+        final AlertDialog show = alertDialog71.show();
+        buttonpushplusok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (senderModel == null) {
+                    SenderModel newSenderModel = new SenderModel();
+                    newSenderModel.setName(editTextpushplusName.getText().toString());
+                    newSenderModel.setType(TYPE_PUSHPLUS);
+                    newSenderModel.setStatus(STATUS_ON);
+                    PushPlusSettingVo pushplusSettingVonew = new PushPlusSettingVo(
+                            editTextpushplusToken.getText().toString()
+                            //editTextDingdingSecret.getText().toString(),
+                            //editTextDingdingAtMobiles.getText().toString(),
+                            //switchDingdingAtAll.isChecked()
+                    );
+                    newSenderModel.setJsonSetting(JSON.toJSONString(pushplusSettingVonew));
+                    SenderUtil.addSender(newSenderModel);
+                    initSenders();
+                    adapter.add(senderModels);
+//                    adapter.add(newSenderModel);
+                } else {
+                    senderModel.setName(editTextpushplusName.getText().toString());
+                    senderModel.setType(TYPE_DINGDING);
+                    senderModel.setStatus(STATUS_ON);
+                    PushPlusSettingVo pushplusSettingVonew = new PushPlusSettingVo(
+                            editTextpushplusToken.getText().toString()
+                            //editTextDingdingSecret.getText().toString(),
+                            //editTextDingdingAtMobiles.getText().toString(),
+                            //switchDingdingAtAll.isChecked()
+                    );
+                    senderModel.setJsonSetting(JSON.toJSONString(pushplusSettingVonew));
+                    SenderUtil.updateSender(senderModel);
+                    initSenders();
+                    adapter.update(senderModels);
+//                    adapter.update(senderModel,position);
+                }
+
+
+                show.dismiss();
+
+
+            }
+        });
+        buttonpushplusdel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (senderModel != null) {
+                    SenderUtil.delSender(senderModel.getId());
+                    initSenders();
+                    adapter.del(senderModels);
+//                    adapter.del(position);
+
+                }
+                show.dismiss();
+            }
+        });
+        buttonpushplustest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String token = editTextpushplusToken.getText().toString();
+                //String secret = editTextDingdingSecret.getText().toString();
+                //String atMobiles = editTextDingdingAtMobiles.getText().toString();
+                //Boolean atAll = switchDingdingAtAll.isChecked();
+                if (token != null && !token.isEmpty()) {
+                    try {
+                        SenderPushplusMsg.sendMsg(handler, token, "test@" + (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())));
                     } catch (Exception e) {
                         Toast.makeText(SenderActivity.this, "发送失败：" + e.getMessage(), Toast.LENGTH_LONG).show();
                         e.printStackTrace();
