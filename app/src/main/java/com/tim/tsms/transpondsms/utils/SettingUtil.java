@@ -70,7 +70,7 @@ public class SettingUtil {
     public static boolean option_withreboot(){
         return sp_setting.getBoolean("option_withreboot",false);
     }
-
+    // dingding
     public static boolean using_dingding(){
         return sp_setting.getBoolean("option_dingding_on",false);
     }
@@ -79,6 +79,16 @@ public class SettingUtil {
     }
     public static String get_using_dingding_secret(){
         return sp_setting.getString("option_dingding_secret","");
+    }
+    //pushplus
+    public static boolean using_pushplus(){
+        return sp_setting.getBoolean("option_pushplus_on",false);
+    }
+    public static String get_using_pushplus_token(){
+        return sp_setting.getString("option_pushplus_token","");
+    }
+    public static String get_using_pushplus_secret(){
+        return sp_setting.getString("option_pushplus_secret","");
     }
 
     public static boolean using_email(){

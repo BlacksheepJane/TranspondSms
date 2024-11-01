@@ -181,9 +181,9 @@ public class SendUtil {
                         try {
                             // 此处的getMobile的作用再看
                             // SenderPushplusMsg.sendMsg(handError, pushPlusSettingVo.getToken(), smsVo.getMobile(), smsVo.getSmsVoForSend());
-                            SenderPushplusMsg.sendMsg(handError, pushPlusSettingVo.getToken(), smsVo.getMobile(), smsVo.getSmsVoForSend());
+                            SenderPushplusMsg.sendMsg(handError, pushPlusSettingVo.getToken(), smsVo.getSmsVoForSend());
                         }catch (Exception e){
-                            Log.e(TAG, "senderSendMsg: dingding error "+e.getMessage() );
+                            Log.e(TAG, "senderSendMsg: pushplus error "+e.getMessage() );
                         }
 
                     }

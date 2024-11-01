@@ -8,7 +8,7 @@ public class PushPlusSettingVo implements Serializable {
     public PushPlusSettingVo() {
     }
 
-    public PushPlusSettingVo(String token, String secret) {
+    public PushPlusSettingVo(String token) {
         this.token = token;
     }
 
