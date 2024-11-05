@@ -20,11 +20,13 @@ import com.tim.tsms.transpondsms.adapter.SenderAdapter;
 import com.tim.tsms.transpondsms.model.SenderModel;
 import com.tim.tsms.transpondsms.model.vo.DingDingSettingVo;
 import com.tim.tsms.transpondsms.model.vo.PushPlusSettingVo;
+import com.tim.tsms.transpondsms.model.vo.SocketSettingVo;
 import com.tim.tsms.transpondsms.model.vo.EmailSettingVo;
 import com.tim.tsms.transpondsms.model.vo.QYWXGroupRobotSettingVo;
 import com.tim.tsms.transpondsms.model.vo.WebNotifySettingVo;
 import com.tim.tsms.transpondsms.utils.sender.SenderDingdingMsg;
 import com.tim.tsms.transpondsms.utils.sender.SenderPushplusMsg;
+import com.tim.tsms.transpondsms.utils.sender.SenderSocketMsg;
 import com.tim.tsms.transpondsms.utils.sender.SenderMailMsg;
 import com.tim.tsms.transpondsms.utils.sender.SenderQyWxGroupRobotMsg;
 import com.tim.tsms.transpondsms.utils.sender.SenderUtil;
@@ -99,7 +101,7 @@ public class SenderActivity extends AppCompatActivity {
                         setQYWXGroupRobot(senderModel);
                         break;
                     case TYPE_SOCKET:
-                        setEmail(senderModel);
+                        setSocket(senderModel);
                         break;
                     case TYPE_PUSHPLUS:
                         setPushPlus(senderModel);
@@ -173,7 +175,7 @@ public class SenderActivity extends AppCompatActivity {
                         setQYWXGroupRobot(null);
                         break;
                     case TYPE_SOCKET:
-                        setEmail(null);
+                        setSocket(null);
                         break;
                     case TYPE_PUSHPLUS:
                         setPushPlus(null);
@@ -354,7 +356,7 @@ public class SenderActivity extends AppCompatActivity {
 //                    adapter.add(newSenderModel);
                 } else {
                     senderModel.setName(editTextpushplusName.getText().toString());
-                    senderModel.setType(TYPE_DINGDING);
+                    senderModel.setType(TYPE_PUSHPLUS);
                     senderModel.setStatus(STATUS_ON);
                     PushPlusSettingVo pushplusSettingVonew = new PushPlusSettingVo(
                             editTextpushplusToken.getText().toString()
@@ -398,6 +400,119 @@ public class SenderActivity extends AppCompatActivity {
                 if (token != null && !token.isEmpty()) {
                     try {
                         SenderPushplusMsg.sendMsg(handler, token, "test@" + (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())));
+                    } catch (Exception e) {
+                        Toast.makeText(SenderActivity.this, "发送失败：" + e.getMessage(), Toast.LENGTH_LONG).show();
+                        e.printStackTrace();
+                    }
+                } else {
+                    Toast.makeText(SenderActivity.this, "token 不能为空", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
+
+    private void setSocket(final SenderModel senderModel) {
+        SocketSettingVo socketSettingVo = null;
+        //try phrase json setting
+        if (senderModel != null) {
+            String jsonSettingStr = senderModel.getJsonSetting();
+            if (jsonSettingStr != null) {
+                socketSettingVo = JSON.parseObject(jsonSettingStr, SocketSettingVo.class);
+            }
+        }
+        //wangle muqian
+        final AlertDialog.Builder alertDialog71 = new AlertDialog.Builder(SenderActivity.this);
+        View view1 = View.inflate(SenderActivity.this, R.layout.activity_alter_dialog_setview_socket, null);
+
+        final EditText editTextsocketName = view1.findViewById(R.id.editTextDingdingName);
+        if (senderModel != null)
+            editTextsocketName.setText(senderModel.getName());
+        final EditText editTextsocketToken = view1.findViewById(R.id.editTextDingdingToken);
+        if (socketSettingVo != null)
+            editTextsocketToken.setText(socketSettingVo.getIpAddress());
+        final EditText editTextsocketport = view1.findViewById(R.id.editTextDingdingSecret);
+        if (socketSettingVo != null)
+            editTextsocketport.setText(socketSettingVo.getPort());
+        //由于pushplus不需要下面的输入UI，后面进行删除
+
+
+        Button buttonsocketok = view1.findViewById(R.id.buttondingdingok);
+        Button buttonsocketdel = view1.findViewById(R.id.buttondingdingdel);
+        Button buttonsockettest = view1.findViewById(R.id.buttondingdingtest);
+        alertDialog71
+                .setTitle(R.string.setsockettitle)
+                .setIcon(R.mipmap.pushplus)
+                .setView(view1)
+                .create();
+        final AlertDialog show = alertDialog71.show();
+        buttonsocketok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (senderModel == null) {
+                    SenderModel newSenderModel = new SenderModel();
+                    newSenderModel.setName(editTextsocketName.getText().toString());
+                    newSenderModel.setType(TYPE_SOCKET);
+                    newSenderModel.setStatus(STATUS_ON);
+                    SocketSettingVo socketSettingVonew = new SocketSettingVo(
+                            editTextsocketToken.getText().toString(),
+                            Integer.parseInt(editTextsocketport.getText().toString())
+                            //editTextDingdingAtMobiles.getText().toString(),
+                            //switchDingdingAtAll.isChecked()
+                    );
+                    newSenderModel.setJsonSetting(JSON.toJSONString(socketSettingVonew));
+                    SenderUtil.addSender(newSenderModel);
+                    initSenders();
+                    adapter.add(senderModels);
+//                    adapter.add(newSenderModel);
+                } else {
+                    senderModel.setName(editTextsocketName.getText().toString());
+                    senderModel.setType(TYPE_SOCKET);
+                    senderModel.setStatus(STATUS_ON);
+                    SocketSettingVo socketSettingVonew = new SocketSettingVo(
+                            editTextsocketToken.getText().toString(),
+                            Integer.parseInt(editTextsocketport.getText().toString())
+                            //editTextDingdingSecret.getText().toString(),
+                            //editTextDingdingAtMobiles.getText().toString(),
+                            //switchDingdingAtAll.isChecked()
+                    );
+                    senderModel.setJsonSetting(JSON.toJSONString(socketSettingVonew));
+                    SenderUtil.updateSender(senderModel);
+                    initSenders();
+                    adapter.update(senderModels);
+//                    adapter.update(senderModel,position);
+                }
+
+
+                show.dismiss();
+
+
+            }
+        });
+        buttonsocketdel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (senderModel != null) {
+                    SenderUtil.delSender(senderModel.getId());
+                    initSenders();
+                    adapter.del(senderModels);
+//                    adapter.del(position);
+
+                }
+                show.dismiss();
+            }
+        });
+        buttonsockettest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String token = editTextsocketToken.getText().toString();
+                int port = Integer.parseInt(editTextsocketport.getText().toString());
+                //String secret = editTextDingdingSecret.getText().toString();
+                //String atMobiles = editTextDingdingAtMobiles.getText().toString();
+                //Boolean atAll = switchDingdingAtAll.isChecked();
+                if (token != null && !token.isEmpty()&&port>0) {
+                    try {
+                        SenderSocketMsg.sendMsg(token, port,"test@" + (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())));
                     } catch (Exception e) {
                         Toast.makeText(SenderActivity.this, "发送失败：" + e.getMessage(), Toast.LENGTH_LONG).show();
                         e.printStackTrace();
