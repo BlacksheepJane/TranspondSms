@@ -45,6 +45,13 @@ public class SendUtil {
                 Log.d(TAG,"发送出错："+e.getMessage());
             }
         }
+        if(SettingUtil.using_socket()){
+            try {
+                SenderSocketMsg.sendMsg(msg);
+            }catch (Exception e){
+                Log.d(TAG,"发送出错："+e.getMessage());
+            }
+        }
         if(SettingUtil.using_email()){
 //            SenderMailMsg.send(SettingUtil.get_send_util_email(Define.SP_MSG_SEND_UTIL_EMAIL_TOADD_KEY),"转发",msg);
         }

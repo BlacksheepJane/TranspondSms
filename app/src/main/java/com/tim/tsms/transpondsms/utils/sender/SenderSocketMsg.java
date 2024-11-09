@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 
+import com.tim.tsms.transpondsms.utils.SettingUtil; //新增,修改了SettingUtil中的内容
+
 import java.io.BufferedWriter;
 import java.io.OutputStreamWriter;
 import java.io.IOException;
@@ -25,19 +27,24 @@ public class SenderSocketMsg {
      * 直接发送消息的方法。
      * 该方法是同步的，执行过程中会阻塞当前线程，直到消息发送完成或发生异常。
      *
-     * @param ipAddress 目标服务器的 IP 地址
-     * @param port      目标服务器的端口
      * @param msg       要发送的消息内容
      * @throws Exception 如果发送失败或未正确配置 IP 地址和端口，则抛出异常
      */
-    public static void sendMsg(String ipAddress, int port, String msg) throws Exception {
+    public static void sendMsg(String msg) throws Exception {
+
+        String ipAddress = SettingUtil.get_using_socket_ipAddress();
+        int port = SettingUtil.get_socket_port();
         // 检查 IP 地址是否有效
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
-            if (ipAddress == null || ipAddress.isEmpty()) {
-                return;  // 如果 IP 地址为空，则直接返回
-            }
+        if (ipAddress == null || ipAddress.isEmpty()) {
+            return;  // 如果 IP 地址为空，则直接返回
         }
 
+        if (port == -1) {
+            return;
+        }
+
+        // 构建消息体
+        String textMsg = "{ \"title\": \"通知\", \"content\": \"" + msg + "\" }";
         Log.i(TAG, "sendMsg ipAddress:" + ipAddress + " port:" + port + " msg:" + msg);
         final String msgf = msg;  // 保存消息内容，供异常记录使用
 
@@ -94,10 +101,8 @@ public class SenderSocketMsg {
      */
     public static void sendMsg(final Handler handError, final String ipAddress, final int port, final String msg) throws Exception {
         // 检查 IP 地址是否有效
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
-            if (ipAddress == null || ipAddress.isEmpty()) {
-                return;  // 如果 IP 地址为空，则直接返回
-            }
+        if (ipAddress == null || ipAddress.isEmpty()) {
+            return;  // 如果 IP 地址为空，则直接返回
         }
 
         Log.i(TAG, "sendMsg ipAddress:" + ipAddress + " port:" + port + " msg:" + msg);
