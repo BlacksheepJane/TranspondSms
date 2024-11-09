@@ -1,3 +1,4 @@
+//pull request test
 package com.tim.tsms.transpondsms.utils.sender;
 
 import static com.tim.tsms.transpondsms.SenderActivity.NOTIFY;
@@ -8,6 +9,7 @@ import android.os.Handler;
 import android.util.Log;
 
 import com.tim.tsms.transpondsms.utils.SettingUtil; //新增,修改了SettingUtil中的内容
+import com.tim.tsms.transpondsms.utils.sender.SendHistory;
 
 import java.io.BufferedWriter;
 import java.io.OutputStreamWriter;
