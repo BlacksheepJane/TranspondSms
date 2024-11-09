@@ -1,12 +1,5 @@
 # 短信转发 信息转发 TranspondSms， 把Android手动的短信通过邮件或者钉钉转出去
 
-
-博文连接[https://www.jianshu.com/p/608d1b1477e3]  
-官网论坛[http://tsms.allmything.com]  
-APP下载 [http://tsms.allmything.com/topic/3]
-
-
-
 --------
 ## 该工具实现特点和准则：
 * **简单** 只做两件事：监听短信---》转发
@@ -53,11 +46,6 @@ APP下载 [http://tsms.allmything.com/topic/3]
 
 
 *注：该APP打开后会自动后台运行并在任务栏显示运行图标，请勿强杀，退出后请重新开启，并加入到系统白名单中，并允许后台运行*  
-### QQ交流群 793283514
-* 优先使用官网社区（翻QQ聊天记录太麻烦）
-![QQ交流群](pic/tsmsqq.jpg "QQ交流群")
-
-### 应用截图：[看不了图去码云](https://gitee.com/timsengit/TranspondSms)
 
 ![主界面](pic/main.jpg "应用主界面")
 ![转发详情](pic/maindetail.jpg "转发详情")
@@ -72,39 +60,6 @@ APP下载 [http://tsms.allmything.com/topic/3]
 ![应用设置](pic/about.jpg "关于")
 ![意见反馈](pic/settingfeedback.jpg "意见反馈")
 ![应用更新](pic/update-dingdingsecret.jpg "应用更新")
-
-### 更新记录：
-> [v3.6.3](app/release/TSMS_release_20210309_3.6.3.apk) 1，转发消息添加设备和卡备注相关信息。
-
-> [v3.6.2](app/release/TSMS_release_20210307_3.6.2.apk) 1，修复设置发送方、转发规则弹框分辨率页面遮挡问题。
-
-> [v3.6.1](app/release/TSMS_release_20210303_3.6.1.apk) 1，添加多重规则。\r\n2，添加规则测试按钮。\r\n3，转发规则发送方列表页面支持长按删除。\r\n4，整合逻辑。\r\n5，修复部分错误文字。
-
-> [v3.5.3](app/release/TSMS_release_20210227_3.5.3.apk) 1，修复Post通知验签
-
-> [v3.5.2](app/release/TSMS_release_20210226_3.5.2.apk) 1，修复Post通知验签。2，修复Post通知允许http
-
-> [v3.5.0](app/release/TSMS_release_20210126_3.5.0.apk) 1，钉钉机器人添加 @ 功能
-
-> [v3.4.0](pic/TSMS_release_20210120_3.4.0.apk) 1，增加企业微信群机器人通知。2，修复设置开机启动崩溃
-
-> [v3.3.0](pic/TSMS_release_20210113_3.3.0.apk) 1，增加网页通知验签。2，修复网页及钉钉配置测试崩溃
-
-> [v3.2.0](pic/TSMS_release_20210106_3.2.0.apk) 1，增加邮箱SSL配置。2，邮箱测试结果通知
-
-> [v3.1.0](pic/TSMS_release_20201231_3.1.0.apk) 1，界面重构。2，增加转发规则页面。3，增加发送方页面。4，升级配置页面
-
-> [v2.1.0](pic/TSMS_release_20200806_2.1.0.apk) 1，增加新版钉钉群机器人安全设置中的加签
-
-> [v2.00](pic/TSMS_release_20200729_2.00.apk) 1，移除热点管理，回归简单。2，修复Android9，Android10版本闪退。3，添加更新接口。4，修复bug
-
-> v1.1 减少手动配置启动参数：自启动配置、自动开启热点配置（设置好后手机重启也不用重新打开了，还能自动为pad开启热点）
-<u>热点管理
-可设置跟随设备启动时启动热点，并且在热点关闭后10秒自动重启热点（所以想关闭热点先把设置页码的开启热点关掉）</u>
-(热点助手功能会在后期2020/07/29转移到单独的APP)详见[https://linkhelper.allmything.com]
-
-> v1.0 项目初始化，实现转发
-
 
 ## LICENSE    
 BSD
