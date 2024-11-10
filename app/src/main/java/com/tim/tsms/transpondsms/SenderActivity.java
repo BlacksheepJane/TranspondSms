@@ -432,7 +432,7 @@ public class SenderActivity extends AppCompatActivity {
             editTextsocketToken.setText(socketSettingVo.getIpAddress());
         final EditText editTextsocketport = view1.findViewById(R.id.editTextDingdingSecret);
         if (socketSettingVo != null)
-            editTextsocketport.setText(socketSettingVo.getPort());
+            editTextsocketport.setText(String.valueOf(socketSettingVo.getPort()));
         //由于pushplus不需要下面的输入UI，后面进行删除
 
 
