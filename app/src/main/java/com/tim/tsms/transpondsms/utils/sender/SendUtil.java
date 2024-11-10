@@ -14,6 +14,7 @@ import com.tim.tsms.transpondsms.model.vo.EmailSettingVo;
 import com.tim.tsms.transpondsms.model.vo.QYWXGroupRobotSettingVo;
 import com.tim.tsms.transpondsms.model.vo.SmsVo;
 import com.tim.tsms.transpondsms.model.vo.WebNotifySettingVo;
+import com.tim.tsms.transpondsms.model.vo.SocketSettingVo;
 import com.tim.tsms.transpondsms.utils.LogUtil;
 import com.tim.tsms.transpondsms.utils.RuleUtil;
 import com.tim.tsms.transpondsms.utils.SettingUtil;
@@ -25,6 +26,7 @@ import static com.tim.tsms.transpondsms.model.SenderModel.TYPE_EMAIL;
 import static com.tim.tsms.transpondsms.model.SenderModel.TYPE_QYWX_GROUP_ROBOT;
 import static com.tim.tsms.transpondsms.model.SenderModel.TYPE_WEB_NOTIFY;
 import static com.tim.tsms.transpondsms.model.SenderModel.TYPE_PUSHPLUS;
+import static com.tim.tsms.transpondsms.model.SenderModel.TYPE_SOCKET;
 
 public class SendUtil {
     private static String TAG = "SendUtil";
@@ -196,7 +198,18 @@ public class SendUtil {
                         }
                     }
                 }
-
+            case TYPE_SOCKET:
+                //try phrase json setting
+                if (senderModel.getJsonSetting() != null) {
+                    SocketSettingVo socketSettingVo = JSON.parseObject(senderModel.getJsonSetting(), SocketSettingVo.class);
+                    if(socketSettingVo!=null){
+                        try {
+                            SenderSocketMsg.sendMsg(handError, socketSettingVo.getIpAddress(), socketSettingVo.getPort(), smsVo.getSmsVoForSend());
+                        }catch (Exception e){
+                            Log.e(TAG, "senderSendMsg: socket error "+e.getMessage() );
+                        }
+                    }
+                }
                 break;
             default:
                 break;
