@@ -85,41 +85,7 @@ public class AboutActivity extends AppCompatActivity {
     }
 
     private void checkNewVersion(){
-        String geturl = "http://api.allmything.com/api/version/hasnew?versioncode=";
-
-        try {
-            geturl+= aUtil.getVersionCode(AboutActivity.this);
-
-            Log.i("SettingActivity",geturl);
-            new UpdateAppManager
-                    .Builder()
-                    //当前Activity
-                    .setActivity(AboutActivity.this)
-                    //更新地址
-                    .setUpdateUrl(geturl)
-                    //全局异常捕获
-                    .handleException(new ExceptionHandler() {
-                        @Override
-                        public void onException(Exception e) {
-                            Log.e(TAG, "onException: ",e );
-                            Toast.makeText(AboutActivity.this, "更新失败："+e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    //实现httpManager接口的对象
-                    .setHttpManager(new UpdateAppHttpUtil())
-                    .build()
-                    .checkNewApp(new UpdateCallback(){
-                        /**
-                         * 没有新版本
-                         */
-                        protected void noNewApp(String error) {
-                            Toast.makeText(AboutActivity.this, "没有新版本", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-//                    .update();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        Toast.makeText(AboutActivity.this, "没有新版本", Toast.LENGTH_SHORT).show();
     }
 
     public void feedbackcommit(View view) {
@@ -141,7 +107,7 @@ public class AboutActivity extends AppCompatActivity {
                     Map<String,String> feedBackData=new HashMap<>();
                     feedBackData.put("email",feedback_et_email.getText().toString());
                     feedBackData.put("text",feedback_et_text.getText().toString());
-                    new HttpUtil().asyncPost("https://api.sl.willanddo.com/api/tsms/feedBack", feedBackData, new HttpI.Callback() {
+                    new HttpUtil().asyncPost("https://formspree.io/f/mgveyann", feedBackData, new HttpI.Callback() {
                         @Override
                         public void onResponse(String result) {
                             Log.i(TAG, "onResponse: "+result);

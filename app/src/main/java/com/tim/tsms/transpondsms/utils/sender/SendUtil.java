@@ -21,10 +21,8 @@ import com.tim.tsms.transpondsms.utils.SettingUtil;
 
 import java.util.List;
 
-import static com.tim.tsms.transpondsms.model.SenderModel.TYPE_DINGDING;
+
 import static com.tim.tsms.transpondsms.model.SenderModel.TYPE_EMAIL;
-import static com.tim.tsms.transpondsms.model.SenderModel.TYPE_QYWX_GROUP_ROBOT;
-import static com.tim.tsms.transpondsms.model.SenderModel.TYPE_WEB_NOTIFY;
 import static com.tim.tsms.transpondsms.model.SenderModel.TYPE_PUSHPLUS;
 import static com.tim.tsms.transpondsms.model.SenderModel.TYPE_SOCKET;
 
@@ -122,21 +120,6 @@ public class SendUtil {
 
         Log.i(TAG, "senderSendMsg smsVo:"+smsVo+"senderModel:"+senderModel);
         switch (senderModel.getType()){
-            case TYPE_DINGDING:
-                //try phrase json setting
-                if (senderModel.getJsonSetting() != null) {
-                    DingDingSettingVo dingDingSettingVo = JSON.parseObject(senderModel.getJsonSetting(), DingDingSettingVo.class);
-                    if(dingDingSettingVo!=null){
-                        try {
-                            SenderDingdingMsg.sendMsg(handError, dingDingSettingVo.getToken(), dingDingSettingVo.getSecret(),dingDingSettingVo.getAtMobils(),dingDingSettingVo.getAtAll(), smsVo.getSmsVoForSend());
-                        }catch (Exception e){
-                            Log.e(TAG, "senderSendMsg: dingding error "+e.getMessage() );
-                        }
-
-                    }
-                }
-
-                break;
             case TYPE_EMAIL:
                 //try phrase json setting
                 if (senderModel.getJsonSetting() != null) {
@@ -153,36 +136,7 @@ public class SendUtil {
                 }
 
                 break;
-            case TYPE_WEB_NOTIFY:
-                //try phrase json setting
-                if (senderModel.getJsonSetting() != null) {
-                    WebNotifySettingVo webNotifySettingVo = JSON.parseObject(senderModel.getJsonSetting(), WebNotifySettingVo.class);
-                    if(webNotifySettingVo!=null){
-                        try {
-                            SenderWebNotifyMsg.sendMsg(handError,webNotifySettingVo.getToken(),webNotifySettingVo.getSecret(),smsVo.getMobile(),smsVo.getSmsVoForSend());
-                        }catch (Exception e){
-                            Log.e(TAG, "senderSendMsg: SenderWebNotifyMsg error "+e.getMessage() );
-                        }
 
-                    }
-                }
-
-                break;
-            case TYPE_QYWX_GROUP_ROBOT:
-                //try phrase json setting
-                if (senderModel.getJsonSetting() != null) {
-                    QYWXGroupRobotSettingVo qywxGroupRobotSettingVo = JSON.parseObject(senderModel.getJsonSetting(), QYWXGroupRobotSettingVo.class);
-                    if(qywxGroupRobotSettingVo!=null){
-                        try {
-                            SenderQyWxGroupRobotMsg.sendMsg(handError,qywxGroupRobotSettingVo.getWebHook(),smsVo.getMobile(),smsVo.getSmsVoForSend());
-                        }catch (Exception e){
-                            Log.e(TAG, "senderSendMsg: SenderQyWxGroupRobotMsg error "+e.getMessage() );
-                        }
-
-                    }
-                }
-
-                break;
 
             case TYPE_PUSHPLUS:
                 //try phrase json setting

@@ -39,12 +39,9 @@ import java.util.Date;
 import java.util.List;
 
 import static com.tim.tsms.transpondsms.model.SenderModel.STATUS_ON;
-import static com.tim.tsms.transpondsms.model.SenderModel.TYPE_DINGDING;
 import static com.tim.tsms.transpondsms.model.SenderModel.TYPE_EMAIL;
 import static com.tim.tsms.transpondsms.model.SenderModel.TYPE_PUSHPLUS;
-import static com.tim.tsms.transpondsms.model.SenderModel.TYPE_QYWX_GROUP_ROBOT;
 import static com.tim.tsms.transpondsms.model.SenderModel.TYPE_SOCKET;
-import static com.tim.tsms.transpondsms.model.SenderModel.TYPE_WEB_NOTIFY;
 
 public class SenderActivity extends AppCompatActivity {
 
@@ -88,17 +85,8 @@ public class SenderActivity extends AppCompatActivity {
                 Log.d(TAG, "onItemClick: "+senderModel);
 
                 switch (senderModel.getType()){
-                    case TYPE_DINGDING:
-                        setDingDing(senderModel);
-                        break;
                     case TYPE_EMAIL:
                         setEmail(senderModel);
-                        break;
-                    case TYPE_WEB_NOTIFY:
-                        setWebNotify(senderModel);
-                        break;
-                    case TYPE_QYWX_GROUP_ROBOT:
-                        setQYWXGroupRobot(senderModel);
                         break;
                     case TYPE_SOCKET:
                         setSocket(senderModel);
@@ -162,17 +150,8 @@ public class SenderActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int which) {
                 switch (which) {
-                    case TYPE_DINGDING:
-                        setDingDing(null);
-                        break;
                     case TYPE_EMAIL:
                         setEmail(null);
-                        break;
-                    case TYPE_WEB_NOTIFY:
-                        setWebNotify(null);
-                        break;
-                    case TYPE_QYWX_GROUP_ROBOT:
-                        setQYWXGroupRobot(null);
                         break;
                     case TYPE_SOCKET:
                         setSocket(null);
@@ -190,118 +169,6 @@ public class SenderActivity extends AppCompatActivity {
         Log.d(TAG, "setDingDing show" + senderModels.size());
     }
 
-
-    private void setDingDing(final SenderModel senderModel) {
-        DingDingSettingVo dingDingSettingVo = null;
-        //try phrase json setting
-        if (senderModel != null) {
-            String jsonSettingStr = senderModel.getJsonSetting();
-            if (jsonSettingStr != null) {
-                dingDingSettingVo = JSON.parseObject(jsonSettingStr, DingDingSettingVo.class);
-            }
-        }
-        final AlertDialog.Builder alertDialog71 = new AlertDialog.Builder(SenderActivity.this);
-        View view1 = View.inflate(SenderActivity.this, R.layout.activity_alter_dialog_setview_dingding, null);
-
-        final EditText editTextDingdingName = view1.findViewById(R.id.editTextDingdingName);
-        if (senderModel != null)
-            editTextDingdingName.setText(senderModel.getName());
-        final EditText editTextDingdingToken = view1.findViewById(R.id.editTextDingdingToken);
-        if (dingDingSettingVo != null)
-            editTextDingdingToken.setText(dingDingSettingVo.getToken());
-        final EditText editTextDingdingSecret = view1.findViewById(R.id.editTextDingdingSecret);
-        if (dingDingSettingVo != null)
-            editTextDingdingSecret.setText(dingDingSettingVo.getSecret());
-        final EditText editTextDingdingAtMobiles = view1.findViewById(R.id.editTextDingdingAtMobiles);
-        if (dingDingSettingVo != null && dingDingSettingVo.getAtMobils()!=null)
-            editTextDingdingAtMobiles.setText(dingDingSettingVo.getAtMobils());
-        final Switch switchDingdingAtAll = view1.findViewById(R.id.switchDingdingAtAll);
-        if (dingDingSettingVo != null && dingDingSettingVo.getAtAll()!=null)
-            switchDingdingAtAll.setChecked(dingDingSettingVo.getAtAll());
-
-        Button buttondingdingok = view1.findViewById(R.id.buttondingdingok);
-        Button buttondingdingdel = view1.findViewById(R.id.buttondingdingdel);
-        Button buttondingdingtest = view1.findViewById(R.id.buttondingdingtest);
-        alertDialog71
-                .setTitle(R.string.setdingdingtitle)
-                .setIcon(R.mipmap.dingding)
-                .setView(view1)
-                .create();
-        final AlertDialog show = alertDialog71.show();
-        buttondingdingok.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                if (senderModel == null) {
-                    SenderModel newSenderModel = new SenderModel();
-                    newSenderModel.setName(editTextDingdingName.getText().toString());
-                    newSenderModel.setType(TYPE_DINGDING);
-                    newSenderModel.setStatus(STATUS_ON);
-                    DingDingSettingVo dingDingSettingVonew = new DingDingSettingVo(
-                            editTextDingdingToken.getText().toString(),
-                            editTextDingdingSecret.getText().toString(),
-                            editTextDingdingAtMobiles.getText().toString(),
-                            switchDingdingAtAll.isChecked());
-                    newSenderModel.setJsonSetting(JSON.toJSONString(dingDingSettingVonew));
-                    SenderUtil.addSender(newSenderModel);
-                    initSenders();
-                    adapter.add(senderModels);
-//                    adapter.add(newSenderModel);
-                } else {
-                    senderModel.setName(editTextDingdingName.getText().toString());
-                    senderModel.setType(TYPE_DINGDING);
-                    senderModel.setStatus(STATUS_ON);
-                    DingDingSettingVo dingDingSettingVonew = new DingDingSettingVo(
-                            editTextDingdingToken.getText().toString(),
-                            editTextDingdingSecret.getText().toString(),
-                            editTextDingdingAtMobiles.getText().toString(),
-                            switchDingdingAtAll.isChecked());
-                    senderModel.setJsonSetting(JSON.toJSONString(dingDingSettingVonew));
-                    SenderUtil.updateSender(senderModel);
-                    initSenders();
-                    adapter.update(senderModels);
-//                    adapter.update(senderModel,position);
-                }
-
-
-                show.dismiss();
-
-
-            }
-        });
-        buttondingdingdel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (senderModel != null) {
-                    SenderUtil.delSender(senderModel.getId());
-                    initSenders();
-                    adapter.del(senderModels);
-//                    adapter.del(position);
-
-                }
-                show.dismiss();
-            }
-        });
-        buttondingdingtest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String token = editTextDingdingToken.getText().toString();
-                String secret = editTextDingdingSecret.getText().toString();
-                String atMobiles = editTextDingdingAtMobiles.getText().toString();
-                Boolean atAll = switchDingdingAtAll.isChecked();
-                if (token != null && !token.isEmpty()) {
-                    try {
-                        SenderDingdingMsg.sendMsg(handler, token, secret,atMobiles,atAll, "test@" + (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())));
-                    } catch (Exception e) {
-                        Toast.makeText(SenderActivity.this, "发送失败：" + e.getMessage(), Toast.LENGTH_LONG).show();
-                        e.printStackTrace();
-                    }
-                } else {
-                    Toast.makeText(SenderActivity.this, "token 不能为空", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-    }
 
     private void setPushPlus(final SenderModel senderModel) {
         PushPlusSettingVo pushplusSettingVo = null;
@@ -637,191 +504,6 @@ public class SenderActivity extends AppCompatActivity {
                     }
                 } else {
                     Toast.makeText(SenderActivity.this, "token 不能为空", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-    }
-
-    private void setWebNotify(final SenderModel senderModel) {
-        WebNotifySettingVo webNotifySettingVo = null;
-        //try phrase json setting
-        if (senderModel != null) {
-            String jsonSettingStr = senderModel.getJsonSetting();
-            if (jsonSettingStr != null) {
-                webNotifySettingVo = JSON.parseObject(jsonSettingStr, WebNotifySettingVo.class);
-            }
-        }
-
-        final AlertDialog.Builder alertDialog71 = new AlertDialog.Builder(SenderActivity.this);
-        View view1 = View.inflate(SenderActivity.this, R.layout.activity_alter_dialog_setview_webnotify, null);
-
-        final EditText editTextWebNotifyName = view1.findViewById(R.id.editTextWebNotifyName);
-        if (senderModel != null) editTextWebNotifyName.setText(senderModel.getName());
-        final EditText editTextWebNotifyToken = view1.findViewById(R.id.editTextWebNotifyToken);
-        if (webNotifySettingVo != null) editTextWebNotifyToken.setText(webNotifySettingVo.getToken());
-        final EditText editTextWebNotifySecret = view1.findViewById(R.id.editTextWebNotifySecret);
-        if (webNotifySettingVo != null) editTextWebNotifySecret.setText(webNotifySettingVo.getSecret());
-
-        Button buttonbebnotifyok = view1.findViewById(R.id.buttonbebnotifyok);
-        Button buttonbebnotifydel = view1.findViewById(R.id.buttonbebnotifydel);
-        Button buttonbebnotifytest = view1.findViewById(R.id.buttonbebnotifytest);
-        alertDialog71
-                .setTitle(R.string.setwebnotifytitle)
-                .setIcon(R.mipmap.ic_launcher)
-                .setView(view1)
-                .create();
-        final AlertDialog show = alertDialog71.show();
-
-        buttonbebnotifyok.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                if (senderModel == null) {
-                    SenderModel newSenderModel = new SenderModel();
-                    newSenderModel.setName(editTextWebNotifyName.getText().toString());
-                    newSenderModel.setType(TYPE_WEB_NOTIFY);
-                    newSenderModel.setStatus(STATUS_ON);
-                    WebNotifySettingVo webNotifySettingVoNew = new WebNotifySettingVo(
-                            editTextWebNotifyToken.getText().toString(),
-                            editTextWebNotifySecret.getText().toString()
-                    );
-                    newSenderModel.setJsonSetting(JSON.toJSONString(webNotifySettingVoNew));
-                    SenderUtil.addSender(newSenderModel);
-                    initSenders();
-                    adapter.add(senderModels);
-                } else {
-                    senderModel.setName(editTextWebNotifyName.getText().toString());
-                    senderModel.setType(TYPE_WEB_NOTIFY);
-                    senderModel.setStatus(STATUS_ON);
-                    WebNotifySettingVo webNotifySettingVoNew = new WebNotifySettingVo(
-                            editTextWebNotifyToken.getText().toString(),
-                            editTextWebNotifySecret.getText().toString()
-                    );
-                    senderModel.setJsonSetting(JSON.toJSONString(webNotifySettingVoNew));
-                    SenderUtil.updateSender(senderModel);
-                    initSenders();
-                    adapter.update(senderModels);
-                }
-
-                show.dismiss();
-
-            }
-        });
-        buttonbebnotifydel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (senderModel != null) {
-                    SenderUtil.delSender(senderModel.getId());
-                    initSenders();
-                    adapter.del(senderModels);
-                }
-                show.dismiss();
-            }
-        });
-        buttonbebnotifytest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String token = editTextWebNotifyToken.getText().toString();
-                String secret = editTextWebNotifySecret.getText().toString();
-                if (!token.isEmpty()) {
-                    try {
-                        SenderWebNotifyMsg.sendMsg(handler,token,secret,"TranspondSms test", "test@" + (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())));
-                    } catch (Exception e) {
-                        Toast.makeText(SenderActivity.this, "发送失败：" + e.getMessage(), Toast.LENGTH_LONG).show();
-                        e.printStackTrace();
-                    }
-                } else {
-                    Toast.makeText(SenderActivity.this, "token 不能为空", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-    }
-
-    private void setQYWXGroupRobot(final SenderModel senderModel) {
-        QYWXGroupRobotSettingVo qywxGroupRobotSettingVo = null;
-        //try phrase json setting
-        if (senderModel != null) {
-            String jsonSettingStr = senderModel.getJsonSetting();
-            if (jsonSettingStr != null) {
-                qywxGroupRobotSettingVo = JSON.parseObject(jsonSettingStr, QYWXGroupRobotSettingVo.class);
-            }
-        }
-
-        final AlertDialog.Builder alertDialog71 = new AlertDialog.Builder(SenderActivity.this);
-        View view1 = View.inflate(SenderActivity.this, R.layout.activity_alter_dialog_setview_qywxgrouprobot, null);
-
-        final EditText editTextQYWXGroupRobotName = view1.findViewById(R.id.editTextQYWXGroupRobotName);
-        if (senderModel != null) editTextQYWXGroupRobotName.setText(senderModel.getName());
-        final EditText editTextQYWXGroupRobotWebHook = view1.findViewById(R.id.editTextQYWXGroupRobotWebHook);
-        if (qywxGroupRobotSettingVo != null) editTextQYWXGroupRobotWebHook.setText(qywxGroupRobotSettingVo.getWebHook());
-
-        Button buttonQyWxGroupRobotOk = view1.findViewById(R.id.buttonQyWxGroupRobotOk);
-        Button buttonQyWxGroupRobotDel = view1.findViewById(R.id.buttonQyWxGroupRobotDel);
-        Button buttonQyWxGroupRobotTest = view1.findViewById(R.id.buttonQyWxGroupRobotTest);
-        alertDialog71
-                .setTitle(R.string.setqywxgrouprobottitle)
-                .setIcon(R.mipmap.ic_launcher)
-                .setView(view1)
-                .create();
-        final AlertDialog show = alertDialog71.show();
-
-        buttonQyWxGroupRobotOk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                if (senderModel == null) {
-                    SenderModel newSenderModel = new SenderModel();
-                    newSenderModel.setName(editTextQYWXGroupRobotName.getText().toString());
-                    newSenderModel.setType(TYPE_QYWX_GROUP_ROBOT);
-                    newSenderModel.setStatus(STATUS_ON);
-                    QYWXGroupRobotSettingVo qywxGroupRobotSettingVoNew = new QYWXGroupRobotSettingVo(
-                            editTextQYWXGroupRobotWebHook.getText().toString()
-                    );
-                    newSenderModel.setJsonSetting(JSON.toJSONString(qywxGroupRobotSettingVoNew));
-                    SenderUtil.addSender(newSenderModel);
-                    initSenders();
-                    adapter.add(senderModels);
-                } else {
-                    senderModel.setName(editTextQYWXGroupRobotName.getText().toString());
-                    senderModel.setType(TYPE_QYWX_GROUP_ROBOT);
-                    senderModel.setStatus(STATUS_ON);
-                    QYWXGroupRobotSettingVo qywxGroupRobotSettingVoNew = new QYWXGroupRobotSettingVo(
-                            editTextQYWXGroupRobotWebHook.getText().toString()
-                    );
-                    senderModel.setJsonSetting(JSON.toJSONString(qywxGroupRobotSettingVoNew));
-                    SenderUtil.updateSender(senderModel);
-                    initSenders();
-                    adapter.update(senderModels);
-                }
-
-                show.dismiss();
-
-            }
-        });
-        buttonQyWxGroupRobotDel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (senderModel != null) {
-                    SenderUtil.delSender(senderModel.getId());
-                    initSenders();
-                    adapter.del(senderModels);
-                }
-                show.dismiss();
-            }
-        });
-        buttonQyWxGroupRobotTest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String webHook = editTextQYWXGroupRobotWebHook.getText().toString();
-                if (!webHook.isEmpty()) {
-                    try {
-                        SenderQyWxGroupRobotMsg.sendMsg(handler,webHook,"TranspondSms test", "test@" + (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())));
-                    } catch (Exception e) {
-                        Toast.makeText(SenderActivity.this, "发送失败：" + e.getMessage(), Toast.LENGTH_LONG).show();
-                        e.printStackTrace();
-                    }
-                } else {
-                    Toast.makeText(SenderActivity.this, "webHook 不能为空", Toast.LENGTH_LONG).show();
                 }
             }
         });
