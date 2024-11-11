@@ -111,21 +111,7 @@ public class AboutActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(String result) {
                             Log.i(TAG, "onResponse: "+result);
-                            if(result!=null){
-                                FeedBackResult feedBackResult= JSON.parseObject(result, FeedBackResult.class);
-                                Log.i(TAG, "feedBackResult: "+feedBackResult);
-
-                                if(feedBackResult!=null){
-                                    JSONObject feedBackResultObject= JSON.parseObject(result);
-                                    Toast.makeText(AboutActivity.this,feedBackResultObject.getString("message"),Toast.LENGTH_LONG).show();
-                                }else {
-                                    Toast.makeText(AboutActivity.this,"感谢您的反馈，我们将尽快处理！",Toast.LENGTH_LONG).show();
-
-                                }
-                            }else {
-                                Toast.makeText(AboutActivity.this,"感谢您的反馈，我们将尽快处理！",Toast.LENGTH_LONG).show();
-
-                            }
+                            Toast.makeText(AboutActivity.this, "感谢您的反馈！", Toast.LENGTH_LONG).show();
 
                         }
                         @Override
