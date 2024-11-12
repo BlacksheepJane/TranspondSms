@@ -76,6 +76,8 @@ public class SenderModel {
                 return R.drawable.ic_baseline_email_24;
             case (TYPE_PUSHPLUS):
                 return R.mipmap.pushplus;
+            case (TYPE_SOCKET):
+                return R.mipmap.socket;
             default:
                 return R.mipmap.ic_launcher_round;
 
@@ -88,6 +90,8 @@ public class SenderModel {
                 return R.drawable.ic_baseline_email_24;
             case (TYPE_PUSHPLUS):
                 return R.mipmap.pushplus;
+            case (TYPE_SOCKET):
+                return R.mipmap.socket;
             default:
                 return R.mipmap.ic_launcher_round;
 
