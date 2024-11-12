@@ -22,7 +22,7 @@ public class RuleLineUtils {
                 "并且 是 手机号 相等 100861\n" +
                 "并且 是 手机号 相等 100861";
 
-        SmsVo msg = new SmsVo("10086", "哈哈哈", new Date(),new SmsExtraVo(1,"卡哇伊","红色白皮手机"));
+        SmsVo msg = new SmsVo("10086", "哈哈哈", new Date(),new SmsExtraVo(1,"sim卡","您的手机"));
         logg("check:" + checkRuleLines(msg, a));
     }
 
