@@ -21,9 +21,9 @@
                 android:layout_height="wrap_content"
                 android:text="设置匹配的字段\n
 转发全部：转发短信的所有内容\n
-手机号：选择手机号需配合下面的设置匹配模式使用\n
+手机号：需配合下面的设置匹配模式使用\n
 手机号 是 匹配的值 或者 手机号 不是 匹配的值\n
-内容： 选择内容需配合下面的设置匹配模式使用\n
+内容： 需配合下面的设置匹配模式使用\n
 内容 包含 匹配的值 等等规则" />
             <TextView
                 android:id="@+id/tv_mu_rule_tips"
