@@ -8,12 +8,9 @@ import com.alibaba.fastjson.JSON;
 import com.tim.tsms.transpondsms.model.LogModel;
 import com.tim.tsms.transpondsms.model.RuleModel;
 import com.tim.tsms.transpondsms.model.SenderModel;
-import com.tim.tsms.transpondsms.model.vo.DingDingSettingVo;
 import com.tim.tsms.transpondsms.model.vo.PushPlusSettingVo;
 import com.tim.tsms.transpondsms.model.vo.EmailSettingVo;
-import com.tim.tsms.transpondsms.model.vo.QYWXGroupRobotSettingVo;
 import com.tim.tsms.transpondsms.model.vo.SmsVo;
-import com.tim.tsms.transpondsms.model.vo.WebNotifySettingVo;
 import com.tim.tsms.transpondsms.model.vo.SocketSettingVo;
 import com.tim.tsms.transpondsms.utils.LogUtil;
 import com.tim.tsms.transpondsms.utils.RuleUtil;
@@ -30,14 +27,6 @@ public class SendUtil {
     private static String TAG = "SendUtil";
 
     public static void send_msg(String msg){
-        if(SettingUtil.using_dingding()){
-            try {
-                SenderDingdingMsg.sendMsg(msg);
-            }catch (Exception e){
-                Log.d(TAG,"发送出错："+e.getMessage());
-            }
-
-        }
         if(SettingUtil.using_pushplus()){
             try {
                 SenderPushplusMsg.sendMsg(msg);
