@@ -177,18 +177,18 @@ public class SenderActivity extends AppCompatActivity {
         final AlertDialog.Builder alertDialog71 = new AlertDialog.Builder(SenderActivity.this);
         View view1 = View.inflate(SenderActivity.this, R.layout.activity_alter_dialog_setview_pushplus, null);
 
-        final EditText editTextpushplusName = view1.findViewById(R.id.editTextDingdingName);
+        final EditText editTextpushplusName = view1.findViewById(R.id.editTextpushplusName);
         if (senderModel != null)
             editTextpushplusName.setText(senderModel.getName());
-        final EditText editTextpushplusToken = view1.findViewById(R.id.editTextDingdingToken);
+        final EditText editTextpushplusToken = view1.findViewById(R.id.editTextpushplusToken);
         if (pushplusSettingVo != null)
             editTextpushplusToken.setText(pushplusSettingVo.getToken());
         //由于pushplus不需要下面的输入UI，后面进行删除
 
 
-        Button buttonpushplusok = view1.findViewById(R.id.buttondingdingok);
-        Button buttonpushplusdel = view1.findViewById(R.id.buttondingdingdel);
-        Button buttonpushplustest = view1.findViewById(R.id.buttondingdingtest);
+        Button buttonpushplusok = view1.findViewById(R.id.buttonpushplusok);
+        Button buttonpushplusdel = view1.findViewById(R.id.buttonpushplusdel);
+        Button buttonpushplustest = view1.findViewById(R.id.buttonpushplustest);
         alertDialog71
                 .setTitle(R.string.setpushplustitle)
                 .setIcon(R.mipmap.pushplus)
@@ -206,9 +206,6 @@ public class SenderActivity extends AppCompatActivity {
                     newSenderModel.setStatus(STATUS_ON);
                     PushPlusSettingVo pushplusSettingVonew = new PushPlusSettingVo(
                             editTextpushplusToken.getText().toString()
-                            //editTextDingdingSecret.getText().toString(),
-                            //editTextDingdingAtMobiles.getText().toString(),
-                            //switchDingdingAtAll.isChecked()
                     );
                     newSenderModel.setJsonSetting(JSON.toJSONString(pushplusSettingVonew));
                     SenderUtil.addSender(newSenderModel);
@@ -221,9 +218,6 @@ public class SenderActivity extends AppCompatActivity {
                     senderModel.setStatus(STATUS_ON);
                     PushPlusSettingVo pushplusSettingVonew = new PushPlusSettingVo(
                             editTextpushplusToken.getText().toString()
-                            //editTextDingdingSecret.getText().toString(),
-                            //editTextDingdingAtMobiles.getText().toString(),
-                            //switchDingdingAtAll.isChecked()
                     );
                     senderModel.setJsonSetting(JSON.toJSONString(pushplusSettingVonew));
                     SenderUtil.updateSender(senderModel);
@@ -285,21 +279,21 @@ public class SenderActivity extends AppCompatActivity {
         final AlertDialog.Builder alertDialog71 = new AlertDialog.Builder(SenderActivity.this);
         View view1 = View.inflate(SenderActivity.this, R.layout.activity_alter_dialog_setview_socket, null);
 
-        final EditText editTextsocketName = view1.findViewById(R.id.editTextDingdingName);
+        final EditText editTextsocketName = view1.findViewById(R.id.editTextsocketName);
         if (senderModel != null)
             editTextsocketName.setText(senderModel.getName());
-        final EditText editTextsocketToken = view1.findViewById(R.id.editTextDingdingToken);
+        final EditText editTextsocketToken = view1.findViewById(R.id.editTextsocketToken);
         if (socketSettingVo != null)
             editTextsocketToken.setText(socketSettingVo.getIpAddress());
-        final EditText editTextsocketport = view1.findViewById(R.id.editTextDingdingSecret);
+        final EditText editTextsocketport = view1.findViewById(R.id.editTextsocketSecret);
         if (socketSettingVo != null)
             editTextsocketport.setText(String.valueOf(socketSettingVo.getPort()));
         //由于pushplus不需要下面的输入UI，后面进行删除
 
 
-        Button buttonsocketok = view1.findViewById(R.id.buttondingdingok);
-        Button buttonsocketdel = view1.findViewById(R.id.buttondingdingdel);
-        Button buttonsockettest = view1.findViewById(R.id.buttondingdingtest);
+        Button buttonsocketok = view1.findViewById(R.id.buttonsocketok);
+        Button buttonsocketdel = view1.findViewById(R.id.buttonsocketdel);
+        Button buttonsockettest = view1.findViewById(R.id.buttonsockettest);
         alertDialog71
                 .setTitle(R.string.setsockettitle)
                 .setIcon(R.mipmap.pushplus)

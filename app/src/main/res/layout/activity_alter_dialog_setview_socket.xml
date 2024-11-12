@@ -22,7 +22,7 @@
                 android:text="设置名称" />
 
             <EditText
-                android:id="@+id/editTextDingdingName"
+                android:id="@+id/editTextsocketName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="3dp"
@@ -44,7 +44,7 @@
 
 
             <EditText
-                android:id="@+id/editTextDingdingToken"
+                android:id="@+id/editTextsocketToken"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="3dp"
@@ -67,7 +67,7 @@
 
 
             <EditText
-                android:id="@+id/editTextDingdingSecret"
+                android:id="@+id/editTextsocketSecret"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="3dp"
@@ -82,7 +82,7 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/buttondingdingok"
+                android:id="@+id/buttonsocketok"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="3dp"
@@ -90,7 +90,7 @@
                 android:text="@string/ok" />
 
             <Button
-                android:id="@+id/buttondingdingdel"
+                android:id="@+id/buttonsocketdel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="3dp"
@@ -98,7 +98,7 @@
                 android:text="@string/del" />
 
             <Button
-                android:id="@+id/buttondingdingtest"
+                android:id="@+id/buttonsockettest"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="3dp"
