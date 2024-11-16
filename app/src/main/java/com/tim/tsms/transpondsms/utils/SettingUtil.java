@@ -70,16 +70,6 @@ public class SettingUtil {
     public static boolean option_withreboot(){
         return sp_setting.getBoolean("option_withreboot",false);
     }
-
-    public static boolean using_dingding(){
-        return sp_setting.getBoolean("option_dingding_on",false);
-    }
-    public static String get_using_dingding_token(){
-        return sp_setting.getString("option_dingding_token","");
-    }
-    public static String get_using_dingding_secret() {
-        return sp_setting.getString("option_dingding_secret", "");
-    }
     //增加PUSHPLUS功能
     public static boolean using_pushplus(){
         return sp_setting.getBoolean("option_pushplus_on",false);

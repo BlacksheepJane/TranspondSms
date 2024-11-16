@@ -99,7 +99,7 @@
                     android:layout_weight="3"
                     android:gravity="right"
                     android:autoLink="web"
-                    android:text="SJTU WL LYM CJL"
+                    android:text="SJTU WL LYM ZJL"
                     android:textSize="18sp" />
             </LinearLayout>
 

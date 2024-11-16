@@ -8,36 +8,25 @@ import com.alibaba.fastjson.JSON;
 import com.tim.tsms.transpondsms.model.LogModel;
 import com.tim.tsms.transpondsms.model.RuleModel;
 import com.tim.tsms.transpondsms.model.SenderModel;
-import com.tim.tsms.transpondsms.model.vo.DingDingSettingVo;
 import com.tim.tsms.transpondsms.model.vo.PushPlusSettingVo;
 import com.tim.tsms.transpondsms.model.vo.EmailSettingVo;
-import com.tim.tsms.transpondsms.model.vo.QYWXGroupRobotSettingVo;
 import com.tim.tsms.transpondsms.model.vo.SmsVo;
-import com.tim.tsms.transpondsms.model.vo.WebNotifySettingVo;
+import com.tim.tsms.transpondsms.model.vo.SocketSettingVo;
 import com.tim.tsms.transpondsms.utils.LogUtil;
 import com.tim.tsms.transpondsms.utils.RuleUtil;
 import com.tim.tsms.transpondsms.utils.SettingUtil;
 
 import java.util.List;
 
-import static com.tim.tsms.transpondsms.model.SenderModel.TYPE_DINGDING;
+
 import static com.tim.tsms.transpondsms.model.SenderModel.TYPE_EMAIL;
-import static com.tim.tsms.transpondsms.model.SenderModel.TYPE_QYWX_GROUP_ROBOT;
-import static com.tim.tsms.transpondsms.model.SenderModel.TYPE_WEB_NOTIFY;
 import static com.tim.tsms.transpondsms.model.SenderModel.TYPE_PUSHPLUS;
+import static com.tim.tsms.transpondsms.model.SenderModel.TYPE_SOCKET;
 
 public class SendUtil {
     private static String TAG = "SendUtil";
 
     public static void send_msg(String msg){
-        if(SettingUtil.using_dingding()){
-            try {
-                SenderDingdingMsg.sendMsg(msg);
-            }catch (Exception e){
-                Log.d(TAG,"发送出错："+e.getMessage());
-            }
-
-        }
         if(SettingUtil.using_pushplus()){
             try {
                 SenderPushplusMsg.sendMsg(msg);
@@ -120,21 +109,6 @@ public class SendUtil {
 
         Log.i(TAG, "senderSendMsg smsVo:"+smsVo+"senderModel:"+senderModel);
         switch (senderModel.getType()){
-            case TYPE_DINGDING:
-                //try phrase json setting
-                if (senderModel.getJsonSetting() != null) {
-                    DingDingSettingVo dingDingSettingVo = JSON.parseObject(senderModel.getJsonSetting(), DingDingSettingVo.class);
-                    if(dingDingSettingVo!=null){
-                        try {
-                            SenderDingdingMsg.sendMsg(handError, dingDingSettingVo.getToken(), dingDingSettingVo.getSecret(),dingDingSettingVo.getAtMobils(),dingDingSettingVo.getAtAll(), smsVo.getSmsVoForSend());
-                        }catch (Exception e){
-                            Log.e(TAG, "senderSendMsg: dingding error "+e.getMessage() );
-                        }
-
-                    }
-                }
-
-                break;
             case TYPE_EMAIL:
                 //try phrase json setting
                 if (senderModel.getJsonSetting() != null) {
@@ -151,36 +125,7 @@ public class SendUtil {
                 }
 
                 break;
-            case TYPE_WEB_NOTIFY:
-                //try phrase json setting
-                if (senderModel.getJsonSetting() != null) {
-                    WebNotifySettingVo webNotifySettingVo = JSON.parseObject(senderModel.getJsonSetting(), WebNotifySettingVo.class);
-                    if(webNotifySettingVo!=null){
-                        try {
-                            SenderWebNotifyMsg.sendMsg(handError,webNotifySettingVo.getToken(),webNotifySettingVo.getSecret(),smsVo.getMobile(),smsVo.getSmsVoForSend());
-                        }catch (Exception e){
-                            Log.e(TAG, "senderSendMsg: SenderWebNotifyMsg error "+e.getMessage() );
-                        }
 
-                    }
-                }
-
-                break;
-            case TYPE_QYWX_GROUP_ROBOT:
-                //try phrase json setting
-                if (senderModel.getJsonSetting() != null) {
-                    QYWXGroupRobotSettingVo qywxGroupRobotSettingVo = JSON.parseObject(senderModel.getJsonSetting(), QYWXGroupRobotSettingVo.class);
-                    if(qywxGroupRobotSettingVo!=null){
-                        try {
-                            SenderQyWxGroupRobotMsg.sendMsg(handError,qywxGroupRobotSettingVo.getWebHook(),smsVo.getMobile(),smsVo.getSmsVoForSend());
-                        }catch (Exception e){
-                            Log.e(TAG, "senderSendMsg: SenderQyWxGroupRobotMsg error "+e.getMessage() );
-                        }
-
-                    }
-                }
-
-                break;
 
             case TYPE_PUSHPLUS:
                 //try phrase json setting
@@ -196,7 +141,18 @@ public class SendUtil {
                         }
                     }
                 }
-
+            case TYPE_SOCKET:
+                //try phrase json setting
+                if (senderModel.getJsonSetting() != null) {
+                    SocketSettingVo socketSettingVo = JSON.parseObject(senderModel.getJsonSetting(), SocketSettingVo.class);
+                    if(socketSettingVo!=null){
+                        try {
+                            SenderSocketMsg.sendMsg(handError, socketSettingVo.getIpAddress(), socketSettingVo.getPort(), smsVo.getSmsVoForSend());
+                        }catch (Exception e){
+                            Log.e(TAG, "senderSendMsg: socket error "+e.getMessage() );
+                        }
+                    }
+                }
                 break;
             default:
                 break;

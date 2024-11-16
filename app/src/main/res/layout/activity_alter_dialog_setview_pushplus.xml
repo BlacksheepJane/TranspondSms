@@ -22,7 +22,7 @@
                 android:text="设置名称" />
 
             <EditText
-                android:id="@+id/editTextDingdingName"
+                android:id="@+id/editTextpushplusName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="3dp"
@@ -44,7 +44,7 @@
 
 
             <EditText
-                android:id="@+id/editTextDingdingToken"
+                android:id="@+id/editTextpushplusToken"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="3dp"
@@ -60,7 +60,7 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/buttondingdingok"
+                android:id="@+id/buttonpushplusok"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="3dp"
@@ -68,7 +68,7 @@
                 android:text="@string/ok" />
 
             <Button
-                android:id="@+id/buttondingdingdel"
+                android:id="@+id/buttonpushplusdel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="3dp"
@@ -76,7 +76,7 @@
                 android:text="@string/del" />
 
             <Button
-                android:id="@+id/buttondingdingtest"
+                android:id="@+id/buttonpushplustest"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="3dp"

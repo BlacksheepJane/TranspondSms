@@ -22,9 +22,9 @@ public class SenderMailMsg {
     private static String TAG = "SenderMailMsg";
     //qq
 //    private static final String HOST = "smtp.qq.com";
-//    private static final String PORT = "587";
-//    private static final String FROM_ADD = "teprinciple@foxmail.com"; //发送方邮箱
-//    private static final String FROM_PSW = "lfrlpganzjrwbeci";//发送方邮箱授权码
+//    private static final String PORT = "465";
+//    private static final String FROM_ADD = "1515559886@qq.com"; //发送方邮箱
+//    private static final String FROM_PSW = "moburhwdwmyqjhgi";//发送方邮箱授权码
 
 //    //163
 //    private static final String HOST = "smtp.163.com";
