@@ -11,14 +11,9 @@ public class SenderModel {
     public static final int STATUS_OFF = 0;
     private int status;
 
-    public static final int TYPE_DINGDING = 0;
-    public static final int TYPE_EMAIL = 1;
-    public static final int TYPE_PUSHPLUS = 2;
-    public static final int TYPE_WEB_NOTIFY = 3;
-    public static final int TYPE_QYWX_GROUP_ROBOT = 4;
-    //start
-    public static final int TYPE_SOCKET = 5;
-    //end
+    public static final int TYPE_EMAIL = 0;
+    public static final int TYPE_PUSHPLUS = 1;
+    public static final int TYPE_SOCKET = 2;
     private int type;
 
     private String jsonSetting;
@@ -77,14 +72,12 @@ public class SenderModel {
 
     public int getImageId() {
         switch (type) {
-            case (TYPE_DINGDING):
-                return R.mipmap.dingding;
             case (TYPE_EMAIL):
                 return R.drawable.ic_baseline_email_24;
-            case (TYPE_QYWX_GROUP_ROBOT):
-                return R.mipmap.qywx;
             case (TYPE_PUSHPLUS):
                 return R.mipmap.pushplus;
+            case (TYPE_SOCKET):
+                return R.mipmap.socket;
             default:
                 return R.mipmap.ic_launcher_round;
 
@@ -93,12 +86,12 @@ public class SenderModel {
 
     public static int getImageId(int type) {
         switch (type) {
-            case (TYPE_DINGDING):
-                return R.mipmap.dingding;
             case (TYPE_EMAIL):
                 return R.drawable.ic_baseline_email_24;
-            case (TYPE_QYWX_GROUP_ROBOT):
-                return R.mipmap.qywx;
+            case (TYPE_PUSHPLUS):
+                return R.mipmap.pushplus;
+            case (TYPE_SOCKET):
+                return R.mipmap.socket;
             default:
                 return R.mipmap.ic_launcher_round;
 
