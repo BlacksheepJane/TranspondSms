@@ -311,7 +311,7 @@ public class SenderActivity extends AppCompatActivity {
                     newSenderModel.setStatus(STATUS_ON);
                     SocketSettingVo socketSettingVonew = new SocketSettingVo(
                             editTextsocketToken.getText().toString(),
-                            Integer.parseInt(editTextsocketport.getText().toString())
+                            editTextsocketport.getText().toString()
                             //editTextDingdingAtMobiles.getText().toString(),
                             //switchDingdingAtAll.isChecked()
                     );
@@ -326,7 +326,7 @@ public class SenderActivity extends AppCompatActivity {
                     senderModel.setStatus(STATUS_ON);
                     SocketSettingVo socketSettingVonew = new SocketSettingVo(
                             editTextsocketToken.getText().toString(),
-                            Integer.parseInt(editTextsocketport.getText().toString())
+                            editTextsocketport.getText().toString()
                             //editTextDingdingSecret.getText().toString(),
                             //editTextDingdingAtMobiles.getText().toString(),
                             //switchDingdingAtAll.isChecked()
