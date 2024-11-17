@@ -506,11 +506,14 @@ public class SenderActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String token = editTextsocketToken.getText().toString();
-                int port = Integer.parseInt(editTextsocketport.getText().toString());
+                // int port = Integer.parseInt(editTextsocketport.getText().toString());
+                String port =  editTextsocketport.getText().toString();
+                final int portNumber;
+                portNumber = Integer.parseInt(port);
                 //String secret = editTextDingdingSecret.getText().toString();
                 //String atMobiles = editTextDingdingAtMobiles.getText().toString();
                 //Boolean atAll = switchDingdingAtAll.isChecked();
-                if (token != null && !token.isEmpty()&&port>0) {
+                if (token != null && !token.isEmpty()&& portNumber >0) {
                     try {
                         SenderSocketMsg.sendMsg(handler, token, port,"test@" + (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())));
                     } catch (Exception e) {
