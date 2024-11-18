@@ -29,15 +29,15 @@ public class SenderPushplusMsg {
     public static void sendMsg(final Handler handError, String token, String msg) throws Exception {
         String[] parts = msg.split("\n", 2);
         String title = parts[0];
-        String context = parts.length > 1 ? parts[1] : "";
-        Log.i(TAG, "sendMsg token:" + token + " from:" + title + " msg:" + context);
+        String content = parts.length > 1 ? parts[1] : "";
+        Log.i(TAG, "sendMsg token:" + token + " from:" + title + " msg:" + content);
         if (token == null || token.isEmpty()) {
             return;
         }
 
         Map textMsgMap =new HashMap();
         textMsgMap.put("title", title);
-        textMsgMap.put("content", context);
+        textMsgMap.put("content", content);
         String textMsg = JSON.toJSONString(textMsgMap);
         Log.i(TAG, "textMsg: " + textMsg);
 
