@@ -94,10 +94,6 @@ public class SettingUtil {
         return sp_setting.getInt("option_socket_port", -1);  // 默认值为 -1
     }
 
-    public static boolean using_email(){
-        return sp_setting.getBoolean("option_email_on",false);
-    }
-
     public static void set_send_util_email(String host,String port,String from_add,String psw,String to_add){
         Log.d(TAG,"set_send_util_email host:"+host+"port"+port+"from_add"+from_add+"psw"+psw+"to_add"+to_add);
         //验证
