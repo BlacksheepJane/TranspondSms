@@ -70,14 +70,17 @@ public class SenderPushplusMsg {
     }
 
     public static void sendMsg(final Handler handError, String token, String msg) throws Exception {
-        // Log.i(TAG, "sendMsg token:" + token + " title:" + title + " from:" + from + " msg:" + msg);
-        Log.i(TAG, "sendMsg token:" + token + " msg:" + msg);//或许考虑增加标题的可选项
+        String[] parts = msg.split("\n", 2);
+        String title = parts[0];
+        String context = parts.length > 1 ? parts[1] : "";
+        Log.i(TAG, "sendMsg token:" + token + " from:" + title + " msg:" + context);
         if (token == null || token.isEmpty()) {
             return;
         }
 
         Map textMsgMap =new HashMap();
-        textMsgMap.put("content", msg);
+        textMsgMap.put("title", title);
+        textMsgMap.put("content", context);
         String textMsg = JSON.toJSONString(textMsgMap);
         Log.i(TAG, "textMsg: " + textMsg);
 
