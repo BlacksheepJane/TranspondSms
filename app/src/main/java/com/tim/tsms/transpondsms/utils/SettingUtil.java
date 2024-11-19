@@ -90,8 +90,8 @@ public class SettingUtil {
         return sp_setting.getString("option_socket_ipAddress","");
     }
 
-    public static int get_socket_port() {
-        return sp_setting.getInt("option_socket_port", -1);  // 默认值为 -1
+    public static String get_socket_port() {
+        return sp_setting.getString("option_socket_port", "");  // 默认值为 -1
     }
 
     public static void set_send_util_email(String host,String port,String from_add,String psw,String to_add){

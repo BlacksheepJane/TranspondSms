@@ -326,7 +326,7 @@ public class RuleActivity extends AppCompatActivity {
                 Log.i("editTextTestMsgContent", editTextTestMsgContent.getText().toString());
 
                 try{
-                    SmsVo testSmsVo=new SmsVo(editTextTestPhone.getText().toString(),editTextTestMsgContent.getText().toString(),new Date(),new SmsExtraVo(1,"卡哇伊","红色白皮手机"));
+                    SmsVo testSmsVo=new SmsVo(editTextTestPhone.getText().toString(),editTextTestMsgContent.getText().toString(),new Date(),new SmsExtraVo(1,"sim卡","您的手机"));
                     SendUtil.sendMsgByRuleModelSenderId(handler,ruleModel,testSmsVo,senderId);
 
                 }catch (Exception e){
