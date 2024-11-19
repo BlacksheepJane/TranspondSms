@@ -254,7 +254,7 @@ public class SenderActivity extends AppCompatActivity {
                 //Boolean atAll = switchDingdingAtAll.isChecked();
                 if (token != null && !token.isEmpty()) {
                     try {
-                        SenderPushplusMsg.sendMsg(handler, token, "test@" + (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())));
+                        SenderPushplusMsg.sendMsg(handler, token, "test@" + (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()))+"\n test");
                     } catch (Exception e) {
                         Toast.makeText(SenderActivity.this, "发送失败：" + e.getMessage(), Toast.LENGTH_LONG).show();
                         e.printStackTrace();
@@ -370,7 +370,7 @@ public class SenderActivity extends AppCompatActivity {
                 //Boolean atAll = switchDingdingAtAll.isChecked()
                 if (token != null && !token.isEmpty()&& portNumber >0) {
                     try {
-                        SenderSocketMsg.sendMsg(handler, token, port,"test@" + (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())));
+                        SenderSocketMsg.sendMsg(handler, token, port,"test@" + (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()))+"\n test");
                     } catch (Exception e) {
                         Toast.makeText(SenderActivity.this, "发送失败：" + e.getMessage(), Toast.LENGTH_LONG).show();
                         e.printStackTrace();

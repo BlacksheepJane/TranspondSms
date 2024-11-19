@@ -26,26 +26,6 @@ import static com.tim.tsms.transpondsms.model.SenderModel.TYPE_SOCKET;
 public class SendUtil {
     private static String TAG = "SendUtil";
 
-    public static void send_msg(String msg){
-        if(SettingUtil.using_pushplus()){
-            try {
-                SenderPushplusMsg.sendMsg(msg);
-            }catch (Exception e){
-                Log.d(TAG,"发送出错："+e.getMessage());
-            }
-        }
-        if(SettingUtil.using_socket()){
-            try {
-                SenderSocketMsg.sendMsg(msg);
-            }catch (Exception e){
-                Log.d(TAG,"发送出错："+e.getMessage());
-            }
-        }
-        if(SettingUtil.using_email()){
-//            SenderMailMsg.send(SettingUtil.get_send_util_email(Define.SP_MSG_SEND_UTIL_EMAIL_TOADD_KEY),"转发",msg);
-        }
-
-    }
     public static void send_msg_list(Context context,List<SmsVo> smsVoList){
         Log.i(TAG, "send_msg_list size: "+smsVoList.size());
         for (SmsVo smsVo:smsVoList){
