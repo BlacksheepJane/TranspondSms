@@ -33,19 +33,16 @@ public class SenderSocketMsg {
     public static void sendMsg(String msg) throws Exception {
 
         String ipAddress = SettingUtil.get_using_socket_ipAddress();
-        int port = SettingUtil.get_socket_port();
+        String port = SettingUtil.get_socket_port();
         // 检查 IP 地址是否有效
         if (ipAddress == null || ipAddress.isEmpty()) {
             return;  // 如果 IP 地址为空，则直接返回
         }
-
-        if (port == -1) {
-            return;
-        }
-
+        final int portNumber;
+        portNumber=Integer.parseInt(port);
         // 构建消息体
         String textMsg = "{ \"title\": \"通知\", \"content\": \"" + msg + "\" }";
-        Log.i(TAG, "sendMsg ipAddress:" + ipAddress + " port:" + port + " msg:" + msg);
+        Log.i(TAG, "sendMsg ipAddress:" + ipAddress + " port:" + portNumber + " msg:" + msg);
         final String msgf = msg;  // 保存消息内容，供异常记录使用
 
         Socket socket = null;
@@ -53,7 +50,7 @@ public class SenderSocketMsg {
 
         try {
             // 创建 TCP 连接到指定的 IP 地址和端口
-            socket = new Socket(ipAddress, port);
+            socket = new Socket(ipAddress, portNumber);
 
             // 创建 BufferedWriter 用于向服务器发送数据
             writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), "UTF-8"));
@@ -99,13 +96,15 @@ public class SenderSocketMsg {
      * @param msg       要发送的消息内容
      * @throws Exception 如果发送失败或未正确配置 IP 地址和端口，则抛出异常
      */
-    public static void sendMsg(final Handler handError, final String ipAddress, final int port, final String msg) throws Exception {
+    public static void sendMsg(final Handler handError, final String ipAddress, final String port, final String msg) throws Exception {
         // 检查 IP 地址是否有效
-        if (ipAddress == null || ipAddress.isEmpty()) {
+        if (ipAddress == null || ipAddress.isEmpty()||port.isEmpty()) {
             return;  // 如果 IP 地址为空，则直接返回
         }
+        final int portNumber;
+        portNumber = Integer.parseInt(port);
 
-        Log.i(TAG, "sendMsg ipAddress:" + ipAddress + " port:" + port + " msg:" + msg);
+        Log.i(TAG, "sendMsg ipAddress:" + ipAddress + " port:" + portNumber + " msg:" + msg);
         final String msgf = msg;  // 保存消息内容，供异常记录使用
 
         // 启动新线程进行异步发送
@@ -117,7 +116,7 @@ public class SenderSocketMsg {
             public void run() {
                 try {
                     // 创建 TCP 连接到指定的 IP 地址和端口
-                    socket = new Socket(ipAddress, port);
+                    socket = new Socket(ipAddress, portNumber);
 
                     // 创建 BufferedWriter 用于向服务器发送数据
                     writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), "UTF-8"));
