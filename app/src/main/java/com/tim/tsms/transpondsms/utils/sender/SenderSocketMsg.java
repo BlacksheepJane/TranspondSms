@@ -1,3 +1,4 @@
+//pull request test
 package com.tim.tsms.transpondsms.utils.sender;
 
 import static com.tim.tsms.transpondsms.SenderActivity.NOTIFY;
@@ -8,6 +9,7 @@ import android.os.Handler;
 import android.util.Log;
 
 import com.tim.tsms.transpondsms.utils.SettingUtil; //新增,修改了SettingUtil中的内容
+import com.tim.tsms.transpondsms.utils.sender.SendHistory;
 
 import java.io.BufferedWriter;
 import java.io.OutputStreamWriter;
@@ -43,11 +45,12 @@ public class SenderSocketMsg {
         /*
         if (ipAddress == null || ipAddress.isEmpty()) {
             return;  // 如果 IP 地址为空，则直接返回
-        }
-
-        if (port == -1) {
-            return;
         }*/
+        /*
+        if (portNumber == -1) {
+            return;
+        }
+        */
 
         // 构建消息体
         String textMsg = "{ \"title\": \"通知\", \"content\": \"" + msg + "\" }";
@@ -107,10 +110,11 @@ public class SenderSocketMsg {
      */
     public static void sendMsg(final Handler handError, final String ipAddress, final String port, final String msg) throws Exception {
         // 检查 IP 地址是否有效
+
         if (ipAddress == null || ipAddress.isEmpty()||port == null || port.isEmpty()) {
             return;  // 如果 IP 地址为空，则直接返回
         }
-
+      
         final int portNumber;
         portNumber = Integer.parseInt(port);
         Log.i(TAG, "sendMsg ipAddress:" + ipAddress + " port:" + portNumber + " msg:" + msg);
