@@ -45,7 +45,7 @@ public class SenderPushplusMsg {
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json;charset=utf-8"),
                 textMsg);
 
-        String webhookUrl = "http://www.pushplus.plus/send?token=" + token;
+        String webhookUrl = "https://www.pushplus.plus/send?token=" + token;
 
         final Request request = new Request.Builder()
                 .url(webhookUrl)
